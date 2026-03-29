@@ -22,7 +22,7 @@ git clone https://github.com/Why4ck/OBXOD
 pip install -r requirements.txt
 
 python main.py
-
+```
 
 ## Tech
 
