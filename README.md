@@ -24,7 +24,7 @@ pip install -r requirements.txt
 python main.py
 
 
-### Tech
+## Tech
 
 1) Launching Zapret: Bypassing ISP DPI
 2) Launching Warp: Accelerating and Securing Your Connection
