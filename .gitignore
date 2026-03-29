@@ -27,4 +27,8 @@ wheels/
 .DS_Store
 Thumbs.db
 zp.txt
+<<<<<<< HEAD
 *.exe
+=======
+*.exe
+>>>>>>> 5d00891 (Obxod v1 code)
