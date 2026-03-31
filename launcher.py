@@ -159,9 +159,8 @@ class Launcher:
             
             subprocess.run(
                 [str(bat_path)],
-                shell=True,
                 check=True,
-                cwd=self.zp
+                cwd=str(self.zp)
             )
             
             print(Fore.GREEN, "\nZapret was started", Style.RESET_ALL, sep="")
@@ -169,7 +168,6 @@ class Launcher:
         except Exception as e:
             print(Fore.RED, f'Error {e}', Style.RESET_ALL, sep="")
             return False
-    
     
     
     def run_warp(self):
