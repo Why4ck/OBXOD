@@ -31,17 +31,26 @@ class Launcher:
        
        
     def check_zapret(self):
-        zapret_batniki = []
+        folder_path = self.zp
         
-        for file_path in self.zp.glob('*.bat'):
-            zapret_batniki.append(file_path.name)
+        if not os.path.isdir(folder_path) or not os.path.isdir(Path(self.zp).parent):
+            print(Fore.RED, f"Error: Dir not found: {folder_path}", Style.RESET_ALL, sep='')
+            return False
 
-        if self.z_file in zapret_batniki:
+        full_file_path = os.path.join(folder_path, self.z_file)
+
+        if os.path.isfile(full_file_path):
             print(Fore.GREEN, "Successfully | Zapret found", Style.RESET_ALL, sep="")
             return True
         else:
-            print(Fore.RED, "Error\nZapret not found\nMay be wrong path", Style.RESET_ALL, sep="", end='\n\n')
-            print(Fore.GREEN, "Download zapret here -> https://github.com/Flowseal/zapret-discord-youtube/releases", Style.RESET_ALL, sep="", end='\n\n')
+            try:
+                files_in_dir = os.listdir(folder_path)
+                bat_files = [f for f in files_in_dir if f.endswith('.bat')]
+                print(Fore.YELLOW, f"Available .bat files in '{folder_path}': {bat_files}", Style.RESET_ALL, sep='')
+            except Exception:
+                pass
+                
+            print(Fore.RED, f"Error\nZapret file not found: {self.z_file}", Style.RESET_ALL, sep="", end='\n\n')
             return False
         
         
@@ -155,21 +164,21 @@ class Launcher:
     
     def run_zapret(self):
         try:
-            bat_path = self.zp / self.z_file
-            
+            os.chdir(self.zp)
             subprocess.run(
-                [str(bat_path)],
+                [self.z_file],
                 check=True,
-                cwd=str(self.zp)
-            )
+                )
+            
+            os.chdir('..')
             
             print(Fore.GREEN, "\nZapret was started", Style.RESET_ALL, sep="")
             return True
         except Exception as e:
             print(Fore.RED, f'Error {e}', Style.RESET_ALL, sep="")
             return False
-    
-    
+        
+        
     def run_warp(self):
         run = subprocess.run(
             ['warp-cli', 'connect'],
