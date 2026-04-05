@@ -108,3 +108,5 @@ while True:
                 print(Fore.GREEN, "uncorrect number", Style.RESET_ALL, sep="")
     except Exception as e:
         print(Fore.RED, f"Error: {e}", Style.RESET_ALL, sep="")
+        main.kill(True)
+        sys.exit()
