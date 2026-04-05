@@ -27,5 +27,5 @@ python main.py
 ## Tech
 
 1) Launching Zapret: Bypassing ISP DPI
-2) Launching Warp: Accelerating and Securing Your Connection
-: Your connection is secured, accelerated, and bypasses DPI
+2) Launching Warp: Accelerating AND Securing Your Connection AND replace your geo
+: Your connection is secured, accelerated, and bypasses DPI, and bypasses geo block
