@@ -15,3 +15,8 @@ def clear_txt():
             break
         elif a == 'n':
             break
+
+def read_txt():
+    with open('zp.txt', encoding='utf-8') as f:
+        data = f.read()
+        print(data)

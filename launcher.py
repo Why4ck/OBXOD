@@ -197,7 +197,7 @@ class Launcher:
                     subprocess.run(['taskkill', '/f', '/im', 'winws.exe'], 
                                 capture_output=True)
                     
-                    print(Fore.GREEN, "All process has been killed", Style.RESET_ALL, sep="")
+                    print(Fore.GREEN, "OBXOD process has been killed", Style.RESET_ALL, sep="")
                     break
                 except Exception:
                     print(Fore.RED, "Error to kill all process", Style.RESET_ALL, sep="")

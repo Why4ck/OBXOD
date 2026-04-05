@@ -6,7 +6,9 @@ import launcher
 import panel
 import time
 import subprocess
+import os
 from colorama import init, Fore, Style; init()
+import zp
 
 if not ctypes.windll.shell32.IsUserAnAdmin():
     ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
@@ -36,41 +38,17 @@ s = "Menu"
 print(f"{Fore.RED}{s:.^86}{Style.RESET_ALL}", end="\n\n")
 
 menu = """
-OBXOD                  PANEL
-[1] Turn on            [4] Clear zapret path (zp.txt)
-[2] Turn off           [5] Close programm
-[3] Check service
+OBXOD                  PANEL                       MODE                                Other
+[1] Turn on            [4] Update zapret path      [7] Only zapret (Game)              [9] Documentation
+[2] Turn off           [5] Read zapret path        [8] Only warp (Not for Russia)
+[3] Check service      [6] Close programm
 """
 print(Fore.CYAN, menu, Style.RESET_ALL, sep="", end='')
 
 
-zp = ""
-def zappret():
-    global zp
-    try:
-        with open('zp.txt', encoding='utf-8') as f:
-            data = f.read().strip()
+zp_path = zp.read() # extracting zip and get path
+main = launcher.Launcher(zp_path)
 
-    except FileNotFoundError:
-        data = ""
-
-
-
-    if data == "":
-        zp = input("(zapret by FLOWSEAL)Zapret path: ")
-        
-        with open('zp.txt', 'w', encoding='utf-8') as f:
-            f.write(zp)
-
-    else:
-        zp = data
-    
-    zp = Path(zp)
-
-zappret()
-
-
-main = launcher.Launcher(zp)
 
 while True:
     try:
@@ -100,16 +78,30 @@ while True:
             
             elif inp == 4:
                 panel.clear_txt()
-                zappret()
-                main = launcher.Launcher(zp)
+                new_path = zp.read()
+                main = launcher.Launcher(new_path)
             
             elif inp == 5:
-                print("Bye")
+                panel.read_txt()
+            
+            elif inp == 6:
                 main.kill(True)
                 time.sleep(1)
                 break
-
             
+            elif inp == 7:
+                main.kill(True)
+                main.run_zapret()
+
+            elif inp == 8:
+                main.kill(True)
+                main.run_warp()
+            
+            elif inp == 9:
+                with open('README.md', encoding='utf-8') as f:
+                    print(Fore.GREEN, f.read(), Style.RESET_ALL)
+                 
+                
             else:
                 print(Fore.GREEN, "uncorrect number", Style.RESET_ALL, sep="")
     except:
