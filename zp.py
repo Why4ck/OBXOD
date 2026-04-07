@@ -1,47 +1,25 @@
-import shutil
 import os
 import sys
 from pathlib import Path
 
 def get_base_path():
-    """Возвращает путь к папке, где лежат файлы (работает в .exe и без)"""
     if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
         return sys._MEIPASS
-    else:
-        return os.path.abspath(".")
-
-
-def __extract():
-    base_path = get_base_path()
-    zip_path = os.path.join(base_path, "zapret.zip")
-    
-    if not os.path.exists(zip_path):
-        raise FileNotFoundError(f"Файл zapret.zip не найден! Путь: {zip_path}")
-
-    extract_path = os.path.join(base_path, "zapret")
-
-    if os.path.exists(extract_path):
-        shutil.rmtree(extract_path, ignore_errors=True)
-    shutil.unpack_archive(zip_path, extract_path)
-    
-    files = os.listdir(extract_path)
-    if not files:
-        raise FileNotFoundError("В zapret.zip ничего не найдено!")
-    
-    zp_path = Path(os.path.join(extract_path, files[0]))
-    return zp_path
-
+    return os.path.abspath(".")
 
 def read():
     base_path = get_base_path()
+    # Папка zapret уже будет внутри EXE, ее не надо распаковывать!
     zapret_folder = os.path.join(base_path, "zapret")
     
-    if os.path.exists(zapret_folder):
-        zz = os.listdir(zapret_folder)
-        for item in zz:
-            if "zapret" in item.lower():
-                path = Path(os.path.join(zapret_folder, item))
-                return path
+    if not os.path.exists(zapret_folder):
+        raise FileNotFoundError(f"Папка zapret не найдена внутри EXE! Путь: {zapret_folder}")
     
-    path_2 = __extract()
-    return path_2
+    # Если внутри папки zapret есть еще одна подпапка zapret 
+    # (как бывает при кривой архивации) - заходим в нее
+    zz = os.listdir(zapret_folder)
+    for item in zz:
+        if "zapret" in item.lower() and os.path.isdir(os.path.join(zapret_folder, item)):
+            return Path(os.path.join(zapret_folder, item))
+    
+    return Path(zapret_folder)

@@ -1,5 +1,3 @@
-import ctypes
-from elevate import elevate
 import sys
 from pathlib import Path
 import launcher
@@ -9,12 +7,6 @@ import subprocess
 import os
 from colorama import init, Fore, Style; init()
 import zp
-
-if not ctypes.windll.shell32.IsUserAnAdmin():
-    ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
-    elevate(show_console=True, graphical=False)
-    sys.exit(0)
-
 
 name_title = f"""{Fore.GREEN}
  █     █░ ██░ ██▓██   ██▓ ▄████▄   ██ ▄█▀    ▒█████   ▄▄▄▄   ▒██   ██▒ ▒█████  ▓█████▄ 

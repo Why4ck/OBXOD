@@ -168,6 +168,8 @@ class Launcher:
             subprocess.run(
                 [self.z_file],
                 check=True,
+                shell=True,
+                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL # <-------------------- no print text!!!
                 )
             
             os.chdir('..')
